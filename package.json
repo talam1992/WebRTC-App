@@ -1,0 +1,25 @@
+{
+  "name": "webrtc-app",
+  "version": "1.0.0",
+  "description": "First WebRTC App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/talam1992/WebRTC-App.git"
+  },
+  "keywords": [
+    "WebRTC"
+  ],
+  "author": "Timothy Lam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/talam1992/WebRTC-App/issues"
+  },
+  "homepage": "https://github.com/talam1992/WebRTC-App#readme",
+  "dependencies": {
+    "wscat": "^4.0.1"
+  }
+}
