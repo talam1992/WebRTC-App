@@ -16,6 +16,9 @@ connection.onmessage = function(msg) {
         case "answer":
             answerProcess(data.answer);
             break;
+        case "candidate":
+            candidateProcess(data.candidate);
+            break;
     }
 }
 
@@ -101,6 +104,16 @@ function loginProcess(success){
     
             myConn.addStream(stream);
 
+            myConn.onicecandidate = function (event) {
+                if (event.candidate) {
+                    send({
+                        type: "candidate",
+                        candidate: event.candidate
+
+                    })
+                }
+            }
+
         }, function(error){
             console.log(error);
         });
@@ -127,4 +140,8 @@ function offerProcess(offer, name) {
 
 function answerProcess(answer) {
     myConn.setRemoteDescription(new RTCSessionDescription(answer));
+}
+
+function candidateProcess(candidate) {
+    myConn.addIceCandidate(new RTCIceCandidate(candidate))
 }
