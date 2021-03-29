@@ -31,3 +31,7 @@ static
 ```
 node server
 ```
+
+```
+http://localhost:8080/login
+```
