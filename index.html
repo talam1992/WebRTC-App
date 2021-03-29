@@ -7,14 +7,20 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/materialize.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-
+    <style>
+        #chat-area::-webkit-scrollbar{
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div class="main-wrap">
     <div class="call-wrap card" style="z-index: 99;">
         <video id="local-video" autoplay></video>
         <div class="row remote-video-wrap" style="position:relative;">
-            <div class="call-hang-status" style="position:absolute; z-index:999;"></div>
+            <div class="call-hang-status" style="position:absolute; z-index:999;">
+ 
+            </div>
             <video id="remote-video" autoplay></video>
         </div>
         <div class="row">
@@ -26,9 +32,9 @@
     </div>
     <div class="chat-wrap card">
         <div class="row">
-            <div class="col m4 white">
+            <div class="col m12 white">
                 <div class="card-title">Text Chat</div>
-                <div id="chat-area"></div>
+                <div id="chat-area" style="display: flex; flex-direction: column; width: 100%; overflow-y: scroll;"></div>
             </div>
         </div>
         <div class="row">

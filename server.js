@@ -6,7 +6,6 @@ var wss = new webSocketServ({
 
 var users = {};
 var otherUser;
-
 wss.on('connection', function(conn) {
     console.log("User connected");
 
@@ -64,13 +63,59 @@ wss.on('connection', function(conn) {
                     sendToOtherUser(connect, {
                         type: "candidate",
                         candidate: data.candidate
-                     })
-                    }
+                    })
+                }
+                break;
+            case "reject":
+                var connect = users[data.name];
+                if (connect != null) {
+                    sendToOtherUser(connect, {
+                        type: "reject",
+                        name: conn.name
+                    })
+                }
+                break;
+            case "accept":
+                var connect = users[data.name];
+                if (connect != null) {
+                    sendToOtherUser(connect, {
+                        type: "accept",
+                        name: conn.name
+                    })
+                }
+                break;
+            case "leave":
+                var connect = users[data.name];
+                connect.otherUser = null;    
+                if (connect != null) {
+                    sendToOtherUser(connect, {
+                        type: "leave"
+                    })
+                }
+                break;
+            default:
+                sendToOtherUser(conn, {
+                    type: "error",
+                    message: "Command not found: " + data.type
+                });
                 break;
         }
     })
     conn.on('close', function(message){
         console.log('Connection closed');
+        if(conn.name){
+            delete users[conn.name];
+            if(conn.otherUser){
+                var connect = users[conn.otherUser];
+                conn.otherUser = null;
+
+                if(conn != null){
+                    sendToOtherUser(connect, {
+                        type:"leave"
+                    } )
+                }
+            }
+        }
     })
 
     conn.send("Hello World");
