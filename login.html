@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>WebRTC App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">   
+    <title>WebRtc app</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
 </head>
+
 <body>
     <div class="login-wrap">
         <div class="row">
@@ -30,10 +33,12 @@
         </div>
     </div>
     <script>
-    document.querySelector("button.webrtc-login").onclick = function() {
-        var username = document.querySelector('#username').value;
-        window.location.replace("index.html?username="+username+"");
-    }
+        document.querySelector("button.webrtc-login").onclick = function() {
+            var username = document.querySelector('#username').value;
+            window.location.replace("index.html?username=" + username + "");
+        }
+
     </script>
 </body>
+
 </html>

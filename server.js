@@ -1,27 +1,29 @@
 var webSocketServ = require('ws').Server;
 
+
 var wss = new webSocketServ({
-    port:9090
-});
+    port: 9090
+})
 
 var users = {};
 var otherUser;
-wss.on('connection', function(conn) {
+wss.on('connection', function (conn) {
     console.log("User connected");
 
-    conn.on('message', function(message){
+    conn.on('message', function (message) {
         var data;
 
-        try{
+        try {
             data = JSON.parse(message);
         } catch (e) {
             console.log("Invalid JSON");
             data = {};
         }
 
-        switch(data.type){
+        switch (data.type) {
+
             case "login":
-                if(users[data.name]) {
+                if (users[data.name]) {
                     sendToOtherUser(conn, {
                         type: "login",
                         success: false
@@ -29,13 +31,16 @@ wss.on('connection', function(conn) {
                 } else {
                     users[data.name] = conn;
                     conn.name = data.name
+
                     sendToOtherUser(conn, {
                         type: "login",
                         success: true
                     })
                 }
+
                 break;
             case "offer":
+
                 var connect = users[data.name];
                 if (connect != null) {
                     conn.otherUser = data.name;
@@ -47,8 +52,11 @@ wss.on('connection', function(conn) {
                     })
                 }
                 break;
+
             case "answer":
+
                 var connect = users[data.name];
+
                 if (connect != null) {
                     conn.otherUser = data.name
                     sendToOtherUser(connect, {
@@ -56,9 +64,13 @@ wss.on('connection', function(conn) {
                         answer: data.answer
                     })
                 }
-                break;
+
+                break
+
             case "candidate":
+
                 var connect = users[data.name];
+
                 if (connect != null) {
                     sendToOtherUser(connect, {
                         type: "candidate",
@@ -67,7 +79,9 @@ wss.on('connection', function(conn) {
                 }
                 break;
             case "reject":
+
                 var connect = users[data.name];
+
                 if (connect != null) {
                     sendToOtherUser(connect, {
                         type: "reject",
@@ -76,7 +90,9 @@ wss.on('connection', function(conn) {
                 }
                 break;
             case "accept":
+
                 var connect = users[data.name];
+
                 if (connect != null) {
                     sendToOtherUser(connect, {
                         type: "accept",
@@ -86,13 +102,16 @@ wss.on('connection', function(conn) {
                 break;
             case "leave":
                 var connect = users[data.name];
-                connect.otherUser = null;    
+                connect.otherUser = null;
+
                 if (connect != null) {
                     sendToOtherUser(connect, {
                         type: "leave"
                     })
                 }
+
                 break;
+
             default:
                 sendToOtherUser(conn, {
                     type: "error",
@@ -100,8 +119,10 @@ wss.on('connection', function(conn) {
                 });
                 break;
         }
+
+
     })
-    conn.on('close', function(message){
+    conn.on('close', function () {
         console.log('Connection closed');
         if(conn.name){
             delete users[conn.name];
@@ -119,8 +140,9 @@ wss.on('connection', function(conn) {
     })
 
     conn.send("Hello World");
+
 })
 
-function sendToOtherUser (connection, message) {
+function sendToOtherUser(connection, message) {
     connection.send(JSON.stringify(message))
 }
