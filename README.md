@@ -1,6 +1,6 @@
 # WebRTC App
 
-
+## @Author: Timothy Lam
 
 https://www.textfixer.com/html/compress-html-compression.php
 

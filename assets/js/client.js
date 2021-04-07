@@ -381,6 +381,7 @@ function leaveProcess() {
     myConn.onicecandidate = null;
     myConn.onaddstream = null;
     connected_user = null;
+    call_status.innerHTML = "";
 }
 var msgInput = document.querySelector("#msg-input");
 var msgSendBtn = document.querySelector("#msg-sent-btn");

@@ -103,7 +103,6 @@ wss.on('connection', function (conn) {
             case "leave":
                 var connect = users[data.name];
                 connect.otherUser = null;
-
                 if (connect != null) {
                     sendToOtherUser(connect, {
                         type: "leave"
@@ -111,7 +110,6 @@ wss.on('connection', function (conn) {
                 }
 
                 break;
-
             default:
                 sendToOtherUser(conn, {
                     type: "error",
@@ -133,7 +131,7 @@ wss.on('connection', function (conn) {
                 if(conn != null){
                     sendToOtherUser(connect, {
                         type:"leave"
-                    } )
+                    });
                 }
             }
         }
@@ -144,5 +142,5 @@ wss.on('connection', function (conn) {
 })
 
 function sendToOtherUser(connection, message) {
-    connection.send(JSON.stringify(message))
+    connection.send(JSON.stringify(message));
 }
